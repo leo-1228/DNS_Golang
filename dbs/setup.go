@@ -94,38 +94,38 @@ func setupSQLite(dbLocation string) (*gorm.DB, error) {
 func InitializeDatabaseService(dbType string, dbSettings map[string]string) error {
 
 	// dbs := os.Getenv("DB")
-	var db *gorm.DB
-	var duplicateDB *gorm.DB
-	var err error
+	// var db *gorm.DB
+	// var duplicateDB *gorm.DB
+	// var err error
 
-	switch dbType {
-	case "sqlite":
-		db, err = setupSQLite(dbSettings["path"])
-		duplicateDB, err = setupSQLite(dbSettings["path"])
-		break
-	case "postgres":
-		db, err = setupPostgres(dbSettings)
-		break
-	case "mysql":
-		db, err = setupMysql(dbSettings)
-		break
-	default:
-		db, err = setupSQLite(dbSettings["path"])
-		duplicateDB, err = setupSQLite(dbSettings["path"])
-		break
-	}
+	// switch dbType {
+	// case "sqlite":
+	// 	db, err = setupSQLite(dbSettings["path"])
+	// 	duplicateDB, err = setupSQLite(dbSettings["path"])
+	// 	break
+	// case "postgres":
+	// 	db, err = setupPostgres(dbSettings)
+	// 	break
+	// case "mysql":
+	// 	db, err = setupMysql(dbSettings)
+	// 	break
+	// default:
+	// 	db, err = setupSQLite(dbSettings["path"])
+	// 	duplicateDB, err = setupSQLite(dbSettings["path"])
+	// 	break
+	// }
 
-	if err != nil {
-		return err
-	}
+	// if err != nil {
+	// 	return err
+	// }
 
-	err = db.AutoMigrate(&ProcessedDomain{})
-	if err != nil {
-		return err
-	}
+	// err = db.AutoMigrate(&ProcessedDomain{})
+	// if err != nil {
+	// 	return err
+	// }
 
-	Service = NewDBService(db, duplicateDB)
-	return nil
+	// Service = NewDBService(db, duplicateDB)
+	// return nil
 }
 
 func InitializeVariantService(dbType string, dbSettings map[string]string) error {
