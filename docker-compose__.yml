@@ -1,0 +1,17 @@
+services:
+  server:
+    image: dnscheck:latest
+    command: -mode=server -secret=We1widaf7uTa8AeP3iero8ooheix2ohd
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./test-deployment/server/config.yaml:/opt/dnscheck/config.yaml"
+      - "./test-deployment/server/5000-words.txt:/opt/dnscheck/5000-words.txt"
+      - "./test-deployment/server/domains.txt:/opt/dnscheck/domains.txt"
+  client1:
+    image: dnscheck:latest
+    command: -mode=client -server=http://server:8181 -secret=We1widaf7uTa8AeP3iero8ooheix2ohd
+    build:
+      context: .
+      dockerfile: Dockerfile

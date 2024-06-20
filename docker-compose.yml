@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=dnscheck"
+      - "MYSQL_USER=dnscheck"
+      - "MYSQL_PASSWORD=dnscheck"
+      - "MYSQL_ROOT_PASSWORD=dnscheck"
+    ports:
+      - "127.0.0.1:3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - '127.0.0.1:3307:80'
+
+volumes:
+  dbdata:

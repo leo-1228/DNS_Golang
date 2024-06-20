@@ -1,0 +1,94 @@
+---
+# you can set a range value or set "all" as a value for the records field.
+# records:
+#   - 0
+#   - 20000
+records: all
+
+# workspace is a directory which contains the domains file. 
+# all outputs like output.csv, errors.txt and invalids.txt will be stored in this directory.
+#
+# CAUTION: 
+# As you know, this service's job is a long-running process, 
+# so the service is designed to be able to continue the process in the event that service is interrupted.
+# To achieve this feature, a file called .workspace.lock will be created automatically, DO NOT EDIT/DELETE it. 
+workspace: .
+
+# The service will read "batch_size" lines at once and will process them concurrently; 
+# Please be careful about setting this value; a higher number sometimes leads to lower performance.
+# The service will persist the process result after all read domains get processed,
+# which means a higher number is equal to a higher risk of losing the result in the event of any interruption.
+#
+# The recommended number is between 10 and 20.
+batch_size: 10
+
+# domains_file is the name of file which contains the domains. 
+# this parameter does not accept path. 
+domains_file: samaneh.txt
+
+# spaces determines valid spaces. it can not be empty
+spaces:
+  - .com.au
+  - .net.au
+  - .org.au
+  - .asn.au
+  - .id.au
+  - .au
+
+# actions is the list of all actions that you want to be applied to the domain variations calculation.
+# you can simply remove which one you want.
+actions:
+ - homoglyph
+ - addition
+ - bitsquatting
+ - hyphenation
+ - insertion
+ - omission
+ - repetition
+ - replacement
+ - transposition
+ - vowelSwap
+ #- dictionary
+
+# by setting homoglyph_double to true, the homoglyph action will be applied twice. (like the python version)
+homoglyph_double: false
+
+# dictionary_file is the name of file which contains the dictionary. 
+# this parameter does not accept path.
+# you can set an empty value in case of removing the "dictionary" from the actions.
+dictionary_file: words_alpha.txt
+
+# log_mode:
+# possible values: 
+#   realtime: you will see all logs in realtime. 
+#   none: you will see no logs at all.
+#   X: you can set a number in seconds greater than 0. in this case you will see the logs every X seconds.
+#
+# CAUTION: 
+# Using the "realtime" value or a lower number of X for this parameter will reduce the performance dramatically.
+#
+# The recommended number is between 5 and 10.
+log_mode: realtime
+
+# All domains will be checked using "dns".
+dns: 1.1.1.1
+
+# concurrency determine the concurrency level of the server
+# possible values is a number between 1 and 10000
+concurrency: 10000
+
+# by setting the check_duplication to true, the service will load all input domains to the memory to check 
+# all variations to prevent duplication.
+check_duplication: true
+
+# by check_main_domains to true, the service will check DNS for main domains as well, otherwise it does not 
+# check main domains and the invalid_main_domains.txt and valid_main_domains.csv will be empty.
+check_main_domains: true
+
+# by setting save_invalid_domains to true, all invalid domains will be stored in the invalids.txt
+# inside the workspace directory.
+#
+# CAUTION: 
+# Because there are TOO MANY invalid domains, the size of this file will be LARGE,
+# and you will need some tools to open and see the content of this file.
+save_invalid_domains: true
